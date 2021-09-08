@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>收集表单数据</title>
+    <script src=".././../vue.js"></script>
+    <style>
+        /* 设置垂直居中 */
+        html,body{
+            width:100%;
+            height:100%;
+            margin:0;
+            padding:0;
+        }
+        /* 水平居中 */
+        .center{
+            width:325px;
+            height:430px;
+            margin:0 auto;  /*水平居中*/
+            /*为垂直居中准备:relative是不会使元素脱离文档流的,relative会占据着移动之前的位置*/
+            position:relative;  
+            /* to偏移是以元素块儿的顶部为起始，而不是中间，因此我们还要上移半个块 */
+            top:50%;
+            margin-top:-250px; 
+            /* background-color: aquamarine; */
+        }
+    
+        .content{
+            display:flex;
+            align-items:center;
+            vertical-align:center;
+            justify-content:center;
+            margin:0 auto;
+        }
+        .box{
+            border-radius: 5px;
+            padding:10px;
+            border:gray solid;
+            box-shadow: rgb(77, 77, 77) 5px 4px 14px 4px;
+        }
+        .btn{
+            width:60px;
+            height:25px;
+            border-radius:5px;
+            background-color: rgb(227, 230, 230);
+            border-color: rgb(143, 143, 143);
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        收集表单数据：
+        若 <input type="text"/>，则v-model收集的是value值，用户输入的就是value值
+        若 <input type="radio"/>，则v-model收集的是value值，且要给标签配置不同的value值，给name配置相同的值表示一组
+        若 <input type="checkbox"/>，
+            1. 没有配置input的不同value值，那么收集的就是checked（选择或未选，bool）
+            2. 配置input的不同value值：
+                (1) v-model的初始值是非数组，那么收集的就是checked
+                (2) v-model的初始值是数组，那么收集的就是value组成的数组
+        
+        备注：v-model的三个修饰符：
+            lazy：失去焦点再收集数据
+            number：输入字符串转为有效数字
+            trim：输入收尾空格过滤
+
+     -->
+    <div id="root" class="center">
+        <div class="box">
+            <!-- 这里没有提交的去向，action=""就不用写了 -->
+            <!-- 表单只要一提交，就调一个方法demo -->
+            <form @submit.prevent="demo">
+                <label for="account">账号：</label>
+                <!-- v-model修饰符trim，去掉字符串前后空格 -->
+                <input type="text" id="account" v-model.trim="account"><br><br>
+                <label for="password">密码：</label>
+                <input type="password" id="password" v-model="password"><br><br>
+                <label for="gender"></label>性别：</label>
+                <!-- 配置相同的name表示为一组 -->
+                男 <input type="radio" id="gender" value="male" v-model="gender" name="sex" checked>
+                女 <input type="radio" id="gender" value="female" v-model="gender" name="sex">
+                <br><br>
+                年龄：
+                <!-- type="number"只能输入数字 -->
+                <!-- 但是我们在data中依然会存成字符串 -->
+                <!-- 我们可以使用c-model的修饰符number来解决 -->
+                <!-- <input type="number" id="age" v-model="age"><br><br> -->
+                <input type="number" v-model.number="age"><br><br>
+
+                <!-- 绑定有多组的checkbox：配置不同的value v-model绑定数组型数据 -->
+                <!-- 如果不配置value值，那么checkbox默认配置的值是checked，即布尔值，是否被勾选 value="" -->
+                <!-- 并且绑定的数据的初始值影响v-model收集回来的数据，这里如果写空字符串，则依然是checked，写成数组可以收集全部 -->
+                爱好：
+                唱歌 <input type="checkbox" v-model="hobby" value="singing">
+                跳舞 <input type="checkbox" v-model="hobby" value="dancing">
+                乐器 <input type="checkbox" v-model="hobby" value="instrument">
+                篮球 <input type="checkbox" v-model="hobby" value="basketball">
+                <br><br>
+                所属校区：
+                <select v-model="campus">
+                    <option>请选择校区</option>
+                    <option>A区</option>
+                    <option>B区</option>
+                    <option>C区</option>
+                    <option>虎溪校区</option>
+                </select>
+                <br><br>
+                其他信息：<br>
+                <!-- v-model修饰符lazy，可以使信息不实时收集，而是等其失去焦点了再收集 -->
+                <textarea v-model.lazy="others" rows="5" cols="39" placeholder="你还有什么其他的建议吗？"></textarea>
+                <br><br>
+                <div class="content">
+                    <input v-model="agree" type="checkbox">阅读并接受<a href="http://baidu.com">《用户协议》</a>
+                </div>
+                <br><br>
+                <div class="content">
+                    <button class="btn" type="submit">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+        new Vue({
+            el: "#root",
+            data: {
+                account: '',
+                password: '',
+                gender: 'male',
+                hobby: [],
+                campus: '虎溪校区',
+                others: '',
+                agree: '',
+                age: ''
+            },
+            // 我们在使用ajax进行前后台数据交互时，是将所收集的数据整理成Jaon格式传给后端
+            methods:{
+                demo(){
+                    alert(1);
+                    // 开发过程中尽量不要碰_data，可以将数据包裹到一个userinfo对象中，拿到userinfo就好
+                    console.log(JSON.stringify(this._data));
+
+                }
+            }
+        })
+    </script>
+</body>
+</html>

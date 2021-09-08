@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // ES5 方式，用构造函数去实例化一个对象
+        function Phone(brand,price){
+            // 对实例对象的属性进行初始化
+            this.brand = brand;
+            this.price = price;
+        }
+
+        // 通过原型对象 添加方法，这样可以做到重用
+        // 给phone添加call方法
+        Phone.prototype.call = function(){
+            console.log("我可以打电话");
+        }
+
+        // 实例化对象
+        let Huawei = new Phone("华为",5999);
+        console.log(Huawei);
+        Huawei.call();
+
+        // ES6 class 类方式
+        class Myphone {
+            // 构造方法，名字不能修改
+            constructor(brand,price){
+                this.brand = brand;
+                this.price = price;
+            }
+
+            // 方法必须使用该语法call(){}，不能使用 ES5 的对象完整形式（即function call(){})
+            call(){
+                console.log("我可以打电话");
+            }
+        };
+        let onePlus = new Myphone("Huawei",5999);
+        console.log(onePlus);
+        onePlus.call();
+    </script>
+</body>
+</html>

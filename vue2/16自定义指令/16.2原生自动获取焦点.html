@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原生js自动获取焦点</title>
+</head>
+<body>
+    <button id="btn">点我创建一个输入框</button>
+    <script>
+        const btn = document.getElementById("btn");
+        btn.onclick = () => {
+            const input = document.createElement("input");
+            document.body.appendChild(input);
+            // 这两个必须写在appendCild语句后面，不像其他的，可以写在前面
+            input.focus();
+            input.parentElement.style.backgroundColor = "skyBlue"
+        }
+        
+    </script>
+</body>
+</html>

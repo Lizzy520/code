@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rest 参数</title>
+</head>
+<body>
+    <script>
+        // ES5 获取实参的方式
+        function data(){
+            console.log(arguments); //得到的是一个包含所有实参的对象
+        }
+
+        function data2(...args){    
+            console.log(args);  //得到的是一个数组，这样我们就可以使用数组的API方法了
+        }
+
+        function data3(a,b,c,...args){
+            console.log(a,b,c);
+            console.log(args);
+        }
+
+        data(1,2,3,4,5);
+        data2(1,2,3,4,5);
+        data3(1,2,3,4,5);
+    </script>
+</body>
+</html>

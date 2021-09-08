@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>类的静态成员</title>
+</head>
+<body>
+    <script>
+        // ES5 构造函数方式，构造函数本身也是一个对象，可以往对象上添加属性和方法
+        function Phone(){
+
+        }
+        // 这种方式添加属性，属于函数对象，不属于实例对象，这样的属性叫做静态成员
+        // 换到面向对象中，静态成员，即使用static关键字的，这样的属性是属于类的，不属于实例对象
+        Phone.name = "nuojiya";
+        Phone.change = function(){
+            console.log("改变世界改变自己");
+        }
+        // 实例对象的属性与构造函数的原型对象是相通的
+        Phone.prototype.size = "5.5 inch";
+
+        let nokia = new Phone();
+        // console.log(nokia.name); //undefined
+        // console.log(nokia.change()); //报错
+        console.log(nokia.size); //结果正确
+        console.log(nokia)
+
+        // 面向对象
+        class Myphone{
+            // 静态属性
+            static name = "手机";
+            static change(){
+                console.log("我可以改变世界");
+            }
+        };
+
+        let mobile = new Myphone();
+        console.log(mobile.name); //undefined
+    </script>
+</body>
+</html>

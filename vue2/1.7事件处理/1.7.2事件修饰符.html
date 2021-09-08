@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件修饰符</title>
+    <script src="../../../vue.js"></script>
+    <style>
+        /* 通配符 */
+        *{
+            margin-top:20px;
+        }
+        .demo1{
+            height:50px;
+            background-color: aquamarine;
+        }
+        .box1{
+            padding:5px;
+            background-color: darkorange;
+        }
+        .box2{
+            padding:5px;
+            background-color: rgb(38, 0, 255);
+        }
+        .list{
+            width: 200px;
+            height: 200px;
+            background-color: deeppink;
+            /* 溢出时出现滚动条 */
+            overflow: auto; 
+        }
+        li{
+            height:100px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id = "root">
+        <h1>欢迎来到{{name}}学习！</h1>
+        <a href="http://www.atguigu.com" @click="showInfo($event)" target="_blank">点我提示信息</a>
+   
+        <div class="box1" @click.capture="showMsg(1,$event)">
+            div1
+            <div class="box2" @click="showMsg(2,$event)">
+                div2
+            </div>
+        </div>
+    
+        <div class="demo1" @click.self="showInfo">
+            <button @click="showInfo">点击</button>
+        </div>
+        
+        <!-- 绑定一个滚动事件: -->
+        <!-- scroll：滚条滚动 -->
+        <!-- wheel：滚轮滚动 -->
+        <!-- passive：事件的默认行为立即执行，无需等待事件回调执行完毕 -->
+        <!-- 在使用wheel时，当滚轮滚动时触发滚动事件，等滚动事件执行完了，滚条才会滚动 -->
+        <!-- 为了避免这种耗费时间的操作，宛若卡顿，我们使用passive，立即执行默认行为——滚条滚动，不用等回调执行完毕，此时触发事件也会进行 -->
+        <ul class="list" @wheel.passive="demo">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+   
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+        new Vue({
+            el:"#root",
+            data:{
+                name:"神乐"
+            },
+            
+            methods:{
+                showInfo(e){
+                    // e.preventDefault();//可以阻止其跳转事件，在Vue中，可以不用写这个，
+                    // 直接在绑定事件的时候：@click.prevent="xxx" 来阻止默认行为，这就是Vue中的六个事件修饰符之一
+                    alert("你好，我是你的摆渡人神乐！");
+                    console.log(e.target)
+                },
+                showMsg(a,e){
+                    console.log(a);
+                },
+                demo(){
+                    for(let i = 0; i < 100000; i++ ){
+                        console.log("@");
+                    }
+                }
+
+            }
+
+        })
+    </script>
+</body>
+</html>

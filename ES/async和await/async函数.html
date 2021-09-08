@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async 函数</title>
+</head>
+<body>
+    <script>
+        // 在函数前面加一个async关键字就变成async函数了
+        // 其返回值为promise对象，即便我们在函数中return一个非promise对象
+        async function fun(){
+            // 如果返回的结果是非promise对象，则返回的是一个成功的（fulfilled）promise对象
+            // return "小莉齐";
+
+            // 如果抛出错误，则返回一个失败的（rejected）promise对象
+            // throw new Error("出错啦！！");
+
+            // 返回一个promise对象（常用）
+            // 返回的状态看promise对象是resolve还是reject，返回的值是promise对象返回的值
+            return new Promise((resolve,reject) => {
+                resolve("成功数据");
+                // reject("失败了");
+            })
+        }
+
+        const res = fun();
+        console.log(res);
+
+        res.then(value => {
+            console.log(value);
+        },reason => {
+            console.log(reason);
+        })
+
+    </script>
+</body>
+</html>

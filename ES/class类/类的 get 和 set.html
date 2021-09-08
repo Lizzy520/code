@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>类的 get 和 set</title>
+</head>
+<body>
+    <script>
+        class Phone{
+            // 对price属性的读取绑定了一个函数
+            // 只要读取实例对象的price属性，就会执行这个函数中的代码
+            // 而且这个函数中的返回值就是这个属性的值
+            get price(){
+                console.log("价格属性被获取");
+                return 3800;
+            }
+            // 对price属性的设置绑定了一个函数
+            // 必须有参数，否则报错
+            set price(newVal){
+                console.log("价格属性被修改了",newVal);
+            }
+        };
+
+        // 实例化对象
+        let s = new Phone();
+        // 输出
+        // 访问时get绑定的函数：价格属性被获取
+        // 函数返回的属性值：3800，若没有返回，则undefined
+        console.log(s.price);
+
+        // 设置price的值，会执行set绑定的函数
+        s.price = 4000;   //newVal = 4000
+        console.log(s.price); //3800
+    </script>
+</body>
+</html>

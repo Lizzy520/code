@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义指令</title>
+    <script src="../../../vue.js"></script>
+</head>
+<body>
+    <!-- 
+        需求1：定义一个v-big指令，和v-text功能类似，但会把绑定的数值放大10倍
+        需求2：定义一个v-fbind指令，和v-bind功能类似，但可以让其所绑定的input元素默认获取焦点(这里不适用autofocus属性)
+
+        自定义指令总结：
+            1. 定义语法：
+                （1）局部指令
+                    new Vue({                               new Vue({
+                        directives:{指令名:配置对象}    或      directives(){}
+                    })                                      })
+
+                （2）全局指令
+                    Vue.directive(指令名,配置对象)      或    Vue.directive(指令名,回调函数)        
+                
+            2. 配置对象中常用的3个回调：
+                （1）bind：指令与元素成功绑定时调用
+                （2）inserted：指令所在元素被插入页面时调用
+                （3）update：指令所在模板结构被重新解析时调用
+            
+            3. 备注：
+                （1）指令定义时不加v-，但使用时要加v-
+                （2）指令名如果是多个单词，要使用kebab-case命名式，不要用camelCase命名
+            
+        注意：
+        指令名多个单词：不可以用驼峰式，只能小写，且每个单词之间用-来连接，如v-big-number，同时，指令定义要写完整，加上引号''，
+        事实上，函数的完整写法都是'fun':function(){}，只是我们习惯简写成fun(){}，但这里多单词自定义指令名需要把名字写完整，
+        后面的可以不写，如'big-number'(){}
+
+        指令相关的函数里的this都不由vue维护，指向window
+     -->
+    <div id="root">
+        <h2>当前的n值是：<span v-text="n"></span></h2>
+        <h2>放大10倍后的n值是：<span v-big="n"></span></h2>
+        <button @click="n++">点我n+1</button>
+        <hr/>
+        <input type="text" v-fbind:value="n"/>
+    </div>
+    <script>
+        // 全局指令
+        Vue.directive('fbind',{
+            // 三个常用的固定函数，这三个可以被称为钩子，他们里面的this指向window
+            // 指令与元素成功绑定时（一上来）被调用
+            bind(element,binding){
+                console.log("bind");
+                element.value = binding.value;
+            },
+            // 指令所在元素被插入页面时被调用
+            inserted(element,binding){
+                console.log("inserted");
+                element.focus();
+            },
+            //指令所在的模板被重新解析时被调用 
+            update(element,binding){
+                console.log("update");
+                element.value = binding.value;
+            }
+        })
+
+        // Vue.directive('big',function(element,binding){
+        //     // console.log(element,binding.value);
+        //     element.innerText = binding.value*10
+        // })
+        new Vue({
+            el: "#root",
+            data: {
+                n:1
+            },
+            // 自定义指令   局部指令
+            directives: {
+                // 简单指令可以用函数写法，复杂的得用对象写法
+                // element是指令所在的元素，binding是指元素和指令之间的一种关联，binding.value是绑定的数据
+                // big函数何时会被调用？ 1. 指令与元素成功绑定时（一上来） 2. 指令所在的模板（容器）被重新解析时
+                big(element,binding){
+                    // console.log(element,binding.value);
+                    element.innerText = binding.value*10
+                },
+                // fbind(e,b){
+                //     e.value =  b.value;
+                //     e.focus();
+                //     //没有一上来就获取焦点，因为只是绑定，指令所在的模板还没有解析，没有出现在页面上，具体看16.2
+                //     // 解决方法，不能写成普通函数，要用完整写法——配置对象写法
+                // },
+                // //配置对象写法
+                // fbind:{
+                //     // 三个常用的固定函数，这三个可以被称为钩子，他们里面的this指向window
+                //     // 指令与元素成功绑定时（一上来）被调用
+                //     bind(element,binding){
+                //         console.log("bind");
+                //         element.value = binding.value;
+                //     },
+                //     // 指令所在元素被插入页面时被调用
+                //     inserted(element,binding){
+                //         console.log("inserted");
+                //         element.focus();
+                //     },
+                //     //指令所在的模板被重新解析时被调用 
+                //     update(element,binding){
+                //         console.log("update");
+                //         element.value = binding.value;
+                //     }
+                // }
+            }
+        })
+    </script>
+</body>
+</html>

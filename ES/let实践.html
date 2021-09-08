@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>let实践</title>
+    <style>
+        .container{
+            margin-top: 100px;
+            
+        }
+        .item{
+            float: left;
+            padding: 30px;
+            margin-left:20px;
+            width: 50px;
+            border-color: blue;
+            border-style: solid;
+
+        }
+        .page-hader{
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="page-hader">点击切换颜色</h2>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    </div>
+    <script>
+        let items = document.getElementsByClassName("item");
+
+        // 定义i的时候不能使用var，因为在该块级作用域里面，当i=2执行结束之后，会继续+1并判断，
+        // 当我们点击一个div时，他会执行回调函数里的事件处理程序，此时没有i，他会继续往外找，
+        // 找到window下的i，因为用的是var，所以此时i=3，items[3]就会出问题
+        for(let i = 0; i < items.length; i++){
+            items[i].onclick = function(){
+                // this.style.background = "pink"
+            items[i].style.background = "pink";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件的嵌套</title>
+    <script src="../../../../vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- <app></app>  我们放到vm里面的template中   -->
+    </div>
+    <script>
+        Vue.config.productionTip = false;
+
+         // 创建组件 第三级
+         const institute1 = Vue.extend({
+            template: `
+                <div>
+                    <h2>学园名称：{{insName1}}</h2>
+                    <h2>所属校区：{{campus1}}</h2>     
+                </div>
+            `,
+            data(){
+                return {
+                    insName1: "水",
+                    campus1: "海纳"
+                }
+            }
+        }) 
+
+        const institute2 = Vue.extend({
+            template: `
+                <div>
+                    <h2>学园名称：{{insName2}}</h2>
+                    <h2>所属校区：{{campus2}}</h2>     
+                </div>
+            `,
+            data(){
+                return {
+                    insName2: "光",
+                    campus2: "普照"
+                }
+            }
+        }) 
+
+        // 创建组件 第二级
+        const school = Vue.extend({
+            template: `
+                <div>
+                    <h2>学校名称：{{name}}</h2>
+                    <h2>学校地址：{{address}}</h2> 
+                    <institute1></institute1>
+                    <institute2></institute2>   
+                </div>
+            `,
+            data(){
+                return {
+                    name: "神乐学园",
+                    address: "魔法城堡"
+                }
+            },
+            // 注册子组件（局部） 要在定义后面，所以把低级组件的定义写在前面
+            // 注册给谁，就写在谁的模板里面
+            components: {
+                institute1,
+                institute2
+            }
+        })
+
+        const hello = Vue.extend({
+            template: `
+                <div>
+                    <h2>{{msg}}</h2>
+                </div>
+            `,
+            data(){
+                return {
+                    msg: "欢迎来到神乐学院" 
+                }
+            },
+        })
+
+        // 定义app组件用于管理所有组件
+        const app = Vue.extend({
+            template:`
+                <div>
+                    <hello></hello>
+                    <school></school>
+                </div>
+            `,
+            components: {
+                school,
+                hello
+            }
+        })
+
+        // 注册组件（局部）
+        new Vue({
+            template:`
+                <div>
+                    <app></app>    
+                </div>
+            `,
+            el: "#root",
+            components: {
+                app
+            }
+        })
+    </script>
+</body>
+</html>

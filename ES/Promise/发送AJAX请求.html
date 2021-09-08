@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发送 AJAX 请求</title>
+</head>
+<body>
+    <script>
+        // 使用原生的AJAX向 url: https://api.apiopen.top/getJoke 发送请求
+
+        // // 1. 创建对象
+        // const xhr = new XMLHttpRequest();
+
+        // // 2. 初始化
+        // xhr.open("GET","https://api.apiopen.top/getJoke");
+
+        // // 3.发送
+        // xhr.send();
+
+        // // 4.绑定事件，处理响应结果，在里面对状态做一个判断
+        // xhr.onreadystatechange = function(){
+        //     // 判断
+        //     if(xhr.readyState === 4){   //等于4则说明进入了最后一个阶段，所有的响应体都回来了
+        //         //判断响应状态码：200-299 表示成功 (即2系列的状态码)
+        //         if(xhr.status >= 200 && xhr.status < 300){
+        //             // 成功
+        //             console.log(xhr.response);
+        //         }
+        //         else{
+        //             // 失败
+        //             console.error(xhr.status);
+        //         }
+        //     }
+        // }
+        
+        // 使用 Promise 封装方法
+        const p = new Promise((resolve,reject) => {
+            // 1. 创建对象
+            const xhr = new XMLHttpRequest();
+
+            // 2. 初始化
+            xhr.open("GET","https://api.apiopen.top/getJoke");
+
+            // 3.发送
+            xhr.send();
+
+            // 4.绑定事件，处理响应结果，在里面对状态做一个判断
+            xhr.onreadystatechange = function(){
+                // 判断
+                if(xhr.readyState === 4){   //等于4则说明进入了最后一个阶段，所有的响应体都回来了
+                    //判断响应状态码：200-299 表示成功 (即2系列的状态码)
+                    if(xhr.status >= 200 && xhr.status < 300){
+                        // 成功
+                        resolve(xhr.response);
+                    }
+                    else{
+                        // 失败
+                        reject(xhr.status);
+                    }
+                }
+            }
+        })
+
+        // 指定回调
+        p.then(function(value){
+            console.log(value);
+        },function(reason){
+            console.error(reason);
+        })
+    </script>
+</body>
+</html>

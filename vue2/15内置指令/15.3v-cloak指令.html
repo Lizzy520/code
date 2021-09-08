@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-cloak指令</title>
+    <style>
+        /* 将所有带有v-cloak属性的标签都隐藏 */
+        /* 等到创建vue实例时会将该属性删掉 */
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- js阻塞 ==> 独木桥 -->
+    <!-- v-cloak指令（没有值）
+        1. 本质是一个特殊的属性，Vue实例创建完毕并接管容器后，会删掉v-cloak属性
+        2. 使用css配合v-cloak可以解决网速慢时页面展示出{{xxx}}的问题
+     -->
+    <div id="#root">
+        <h2 v-cloak>{{name}}</h2>
+    </div>
+    <!-- 写在body末尾的script会等页面加载完了才会加载，然后才到下面创建vue实例，若网速慢，则会看到一些未经编译的东西 -->
+    <!-- 若写在head里面，则会等js加载完了才会渲染页面 -->
+    <script src="../../../vue.js"></script>
+    <script>
+        Vue.config.productionTip = false;
+        new Vue({
+            el: "#root",
+            data: {
+                name: "Lizzy"
+            }
+        })
+    </script>
+</body>
+</html>

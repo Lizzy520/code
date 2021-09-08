@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扩展运算符</title>
+</head>
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <script>
+        const tfboys = ["王俊凯","王源","王俊凯"];
+        function gala(){
+            console.log(arguments);
+        }
+        gala(tfboys);   //结果是里面有一个数组存放
+        gala(...tfboys);    //结果是，数组中的元素单独存放
+
+        // 扩展运算符的应用
+
+        // 1. 数组的合并
+        const kuaizi = ["肖央","王太利"];
+        const fenghuang = ["曾毅","玲花"];
+
+        // 法一：concat （用push的话是将整个数组放进去，而不是元素）
+        const zuixuanxiaopingguo = kuaizi.concat(fenghuang);
+        // 法二：扩展运算符
+        const zuixuanxiaopingguo2 = [...kuaizi,...fenghuang];
+        console.log("数组合并:");
+        console.log(zuixuanxiaopingguo);
+        console.log(zuixuanxiaopingguo2);
+
+        // 2. 数组的克隆
+        const sanzhihua = ['E','G','M'];
+        const sanyecao = [...sanzhihua];
+        console.log("数组克隆:");
+        console.log(sanyecao);
+
+        // 3. 将伪数组转为真正的数组
+        const divs = document.querySelectorAll("div");
+        const divArr = [...divs];
+        console.log("伪数组转真数组:");
+        console.log(divs);  //NodeList
+        console.log(divArr);    //Array
+    </script>
+</body>
+</html>

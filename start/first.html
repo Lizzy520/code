@@ -1,0 +1,106 @@
+<!doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>start</title>
+	<style type="text/css">
+		body{
+			background-color: #e9ffea;
+		}
+		.mytextarea{
+			width:350px;
+			height:80px;
+			position: absolute;
+			background: none;
+			z-index:9;
+		}
+		.note{
+			position: absolute;
+			line-height: 20px;
+			padding:3px 5px;
+		}
+		mystyle{
+			display: block;
+			background-color: #FFC0CB;
+			padding: 50px;
+			font-size: 36px;
+		}
+	</style>
+	<script>
+		function fun1(){
+			var x = document.getElementById('note');
+			x.style.display = 'none'
+		}
+		function fun2(){
+			if(value == '')
+				var x = document.getElementById('note');
+				x.style.display = 'block';
+		}
+	</script>
+</head>
+<body>
+	<!-- alt属性，如果无法显示图像，浏览器将显示alt中的替代文本 -->
+	<img id = "drawimg" loading="lazy" src="../vue_first/vue_first/sources/1.jpg" alt = "图片" style="width: 500px;" />
+	<canvas id = "myCanvas" width="500px" height="300px"></canvas>
+	<script>
+		var c = document.getElementById("myCanvas");
+		var ctx = c.getContext("2d");
+		var img = document.getElementById("drawimg");
+		img.onload = function(){
+			ctx.drawImage(img,300,0,4000,2000,0,0,1000,800);
+		}
+	</script>
+	<br>
+	<a href="http://www.runoob.com" target="_blank" style = "text-decoration:none;">菜鸟教程</a>
+	<!-- input -->
+	<div>
+		<div>
+			<input type="text" style = "text-align: center;" value="请输入文字" />
+			<input type="button" style = "text-align:center;" value="按钮" />
+		<div />
+		<input type="password" style = "text-align: center;" value="密码" />
+		<div>
+			<input type="checkbox" />
+			<input type="checkbox" />
+			<input type="checkbox" />
+		</div>
+		<div>
+			<input type="radio" />
+			<input type="radio" />
+			<input type="radio" />
+		</div>
+		<input type="submit" value="提交" />
+		<div style="margin-top: 10px;">
+			<input type="file" value="请选择文件" />
+		</div>
+		<div style="margin-top: 10px;">
+			<input type="reset" value="重置" />
+		</div>	
+	</div>
+	<!-- 表格 -->
+	<div style="margin-top: 20px;">
+		<table border="1" width="300" height="100"  style = "text-align: center;">
+			<tr>
+				<th>姓名</th>
+				<th>学号</th>
+				<th>班级</th>
+			</tr>
+			<tr>
+				<td>黎黎</td>
+				<td>20181234</td>
+				<td>物联网工程1班</td>
+			</tr>
+			<tr>
+				<td>苏南</td>
+				<td>20185678</td>
+				<td>物联网工程2班</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:relative; margin-top:30px;margin-bottom: 150px;">
+		<textarea class = "mytextarea" placeholder="请输入"></textarea>
+	</div>
+	<mystyle>尝试添加HTML新元素</mystyle>
+	
+</body>
+</html>

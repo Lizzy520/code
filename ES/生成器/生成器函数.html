@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成器函数</title>
+</head>
+<body>
+    <script>
+        function * fun(){
+            console.log(1);
+            yield "两只老虎爱跳舞";
+            console.log(2);
+            yield "小兔子乖乖拔萝卜";
+            console.log(3);
+            yield "我学鸭子在走路";
+            console.log(4);
+        }
+        let it = fun();
+        console.log(it.next());
+        console.log(it.next());
+        console.log(it.next());
+        console.log(it.next());
+        
+        console.log("for...of")
+        for(const v of fun()){
+            console.log(v);
+        }
+    </script>
+</body>
+</html>

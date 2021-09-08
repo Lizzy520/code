@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成器函数实例</title>
+</head>
+<body>
+    <script>
+        // 1s 后输出111，2s 后输出222，3s 后输出333
+        // 如果没有好的异步回调方案，如果需要调用很多次，很可能陷入回调地狱，层层回调，如下：
+        // setTimeout(() => {
+        //     console.log(111);
+        //     setTimeout(() => {
+        //         console.log(222);
+        //         setTimeout(() =>{
+        //             console.log(333);
+        //         },3000)
+        //     },2000)
+        // },1000)
+
+        // 使用生成器函数，做异步编程，而不是让代码不断推进变长
+        function one(){
+            setTimeout(() => {
+                console.log(111);
+                it.next();
+            },1000)
+        }
+        function two(){
+            setTimeout(() => {
+                console.log(222);
+                it.next();
+            },2000)
+        }
+        function three(){
+            setTimeout(() => {
+                console.log(333);
+                it.next();
+            },3000)
+        }
+        function * fun(){
+            yield one();
+            yield two();
+            yield three();
+        }
+
+        let it = fun();
+        it.next();
+
+    </script>
+</body>
+</html>

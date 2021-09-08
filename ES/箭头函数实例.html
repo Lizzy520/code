@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>箭头函数实践</title>
+    <style>
+        div{
+            width: 200px;
+            height: 200px;
+            background: aquamarine;
+        }
+    </style>
+</head>
+<body>
+    <div id="ad"></div><br/><br/>
+    <div id="ad2"></div><br/><br/>
+    <div id="ad3"></div>
+
+    <script type="text/javascript">
+        let item = document.getElementById("ad");
+        // 点击 div 2s后颜色变成粉色
+        item.onclick = () => {
+            setTimeout(function(){
+                item.style.backgroundColor = "pink";
+            },2000)
+        }
+
+        // 老师的写法：
+        let ad = document.getElementById("ad2");
+        // 绑定事件
+        ad.addEventListener("click",function(){
+            // 保存this的值
+            let that = this;
+            setTimeout(function(){
+                // 此时this指向window，window没有style属性
+                // 可以先在外层保存this的值，在这里找不到that的时候就会往外找
+                console.log(this);
+                console.log(that);
+                that.style.background = "pink";
+                // 也可以这么写
+                // ad.style.backgroundColor = "pink";
+            },2000)
+        })
+
+        // 为了解决this的问题，我们可以使用箭头函数
+        let ad3 = document.getElementById("ad3");
+        // 绑定事件
+        ad3.addEventListener("click",function(){
+            // 这里箭头函数声明的作用域是在这个function中，this指向这个函数this,
+            // 这个函数中的this,指向我们的事件源ad3
+            setTimeout(() => {
+                console.log(this);
+                this.style.background = "pink";
+            },2000)
+        })
+
+        // 从数组中返回偶数的元素
+        const arr = [1,2,3,4,5,6,7,8];
+
+        // 箭头函数，自定义筛选写法
+        let evenNum = (arr) => {
+            const temp = [];
+            for(let i = 0; i < arr.length; i++){
+                if(arr[i] % 2 == 0){
+                    temp.push(arr[i]);
+                }
+            }
+            return temp;
+        }
+        console.log(evenNum(arr));
+        
+        // filter筛选的箭头函数写法
+        let filterRes = arr.filter((item,index,arr) => item % 2 === 0);
+        console.log(filterRes);
+
+        // 老师写法
+        // 匿名函数：
+        const result1 = arr.filter(function(item){
+            if(item % 2 ===0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        })
+
+        // 箭头函数：简化写法就是上面写的那个
+        const result2 = arr.filter((item) => {
+            if(item % 2 ===0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        })
+
+        console.log(result1);
+        console.log(result2);
+
+    </script>
+</body>
+</html>

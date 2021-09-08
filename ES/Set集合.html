@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set集合</title>
+</head>
+<body>
+    <script>
+        // 声明一个Set
+        let s = new Set();
+        // 里面可以传入一个可迭代数据进行初始化，一般是数组
+        let s2 = new Set(["北京","上海","广东","北京"]);//结果是只有三个，因为Set是集合，元素不重复
+        console.log(s,typeof s);
+        console.log(s2)
+
+        // 迭代遍历
+        for(const v of s2){
+            console.log(v);
+        }
+
+        // 元素个数
+        console.log(s2.size);
+
+        // 添加
+        s2.add("海南");
+        console.log(s2);
+
+        // 删除
+        s2.delete("海南");
+        console.log(s2);
+
+        // 检测
+        console.log(s2.has("北京"));
+
+        // 清空
+        s2.clear();
+        console.log(s2);
+
+    </script>
+</body>
+</html>

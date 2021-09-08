@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 模块化</title>
+</head>
+<body>
+    <!-- <script type="module">
+        // 引入 m1.js 模块内容
+        // 1. 通用的导入方式
+        import * as m1 from "./m1.js";
+        console.log(m1);
+        m1.teach();
+
+        import * as m2 from "./m2.js";
+        console.log(m2);
+
+        import * as m3 from "./m3.js";
+        console.log(m3);
+        console.log(m3.default);
+        m3.default.addmission();
+
+        // 2. 解构赋值形式
+        console.log("————解构赋值形式————")
+        // 对于分别暴露
+        import {school,teach} from "./m1.js";
+        console.log(school);
+        console.log(teach);
+
+        // 对于统一暴露
+        // 不能重名，可以在引入时使用别名
+        import {school as cqu,hello} from "./m2.js";
+        console.log(cqu);
+        console.log(hello);
+
+        // 对于默认暴露
+        // 不能直接使用default，必须使用别名
+        import {default as df} from "./m3.js";
+        console.log(df);
+
+        // 3. 简便形式 只针对默认暴露
+        import m3df from "./m3.js";
+        console.log(m3df);
+    </script>
+    <-- 通过引入入口文件方式 -->
+    <!-- <script src="./app.js" type="module">
+        // 通过app.js入口文件引入
+        // 一般不这么做，因为兼容性问题
+    </script>  -->
+    <script src="../dist/bundle.js"></script>
+</body>
+</html>

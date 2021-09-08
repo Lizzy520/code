@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>变量的解构赋值</title>
+</head>
+<body>
+    <script>
+        const F4 = ["小沈阳","刘能","赵四","宋小宝"];
+        let [a,b,c,d] = F4;
+        console.log(a,b,c,d);
+
+        const ZHAO = {
+            name: "赵本山",
+            age: "不详",
+            sketch:function(){
+                console.log(name + " " + age);
+            }
+        }
+        
+        let {name,age,sketch} = ZHAO;
+        console.log(name,age,sketch);
+        sketch();
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>迭代器自定义遍历对象</title>
+</head>
+<body>
+    <script>
+        const banji = {
+            name: "终极一班",
+            stus: [
+                "小明",
+                "小婷",
+                "小飞",
+                "小安"
+            ],
+            // 自定义迭代器作为对象的属性（因为这里不能直接遍历）
+            // 根据迭代器的定义，首先要创建一个指针对象
+            // 然后有每次调用的next
+            [Symbol.iterator](){
+                let index = 0;
+                let that = this;    //也可以将next写成箭头函数
+                return {
+                    next: function(){
+                        if(index < that.stus.length){
+                            const res = {value: that.stus[index],done:false};
+                            index++;
+                            return res;
+                        }
+                        else{
+                            return {value:undefined,done:true};
+                        }
+                    }
+                }
+
+            }
+        }
+        // for(const v of banji.stus){
+        //     console.log(v);
+        // }
+        // 这里，我们想通过banji的迭代器来遍历到stus，而不是直接访问里面的stus
+        for(let v of banji){
+            console.log(v);
+        }
+    </script>
+</body>
+</html>

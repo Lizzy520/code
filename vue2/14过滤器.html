@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>过滤器</title>
+    <script src="../../vue.js"></script>
+    <script src="../../dayjs.min.js"></script>
+</head>
+<body>
+    <!-- 第三方库   http://bootcdn.cn moment.js比dayjs强大，但dayjs轻量级-->
+    <!--过滤器 
+        定义：对要显示的数据进行特定格式化后再显示（使用于一些简单逻辑的处理）
+        语法：
+            1. 注册过滤器：Vue.filter(name,callback) 或 new Vue({filters:{}})
+            2. 使用过滤器：{{ xxx | 过滤器名 }} 或 v-bind:属性 = "xxx | 过滤器名"
+
+        备注：
+            1. 过滤器也可以接收额外参数，多个过滤器也可以串联
+            2. 并没有改变原本的数据，是产生新的对应的数据
+     -->
+    <div id="root">
+        <h2>显示格式化后的时间</h2>
+        <h3>使用Date.now()获得时间戳</h3>
+        <h3>现在的时间是：{{time}}</h3>
+        <h3>格式化后的时间是：{{fmtTime}} （计算属性实现）</h3>
+        <h3>格式化后的时间是：{{getFmtTime()}} （methods实现）</h3>
+        <!-- 过滤器实现 过滤器的插值语法使用 -->
+        <!-- 使用管道符，并在后面加入定义好的过滤器，将管道前面的time作为过滤器的参数，过滤器的返回值会将插值语法中的整个替换掉，其在data中的配置项是filters -->
+        <h3>格式化后的时间是：{{timeT | timeFormater}} （过滤器实现实现）</h3>
+        <!-- 过滤器的传参 -->
+        <h3>格式化后的时间是：{{timeT | timeFormater("YYYY_MM_DD")}} （过滤器实现实现）</h3>
+        <!-- 过滤器，多个管道，切割字符串取年份 -->
+        <h3>格式化后的年份是：{{timeT | timeFormater("YYYY_MM_DD") | mySlice}} （过滤器实现实现，多管道）</h3>
+        <!-- 过滤器的v-bind使用，v-model不可以使用 -->
+        <h3 :msg="msg | mySlice">你好</h3>
+    </div>
+    <script>
+        Vue.config.productionTip = false;
+        // 全局过滤器
+        Vue.filter('mySlice',function(value){
+            return value.slice(0,4);//只取年份
+        })
+        Vue.filter('timeFormater',function(value,fmt='YYYY-MM-DD HH:mm:ss'){
+            return dayjs(value).format(fmt)
+        })
+        new Vue({
+            el: "#root",
+            data:{
+                timeT: "",
+                msg: "hello world"
+            },
+            methods:{
+                getFmtTime(value){
+                    return dayjs(this.timeT).format('YYYY年MM月DD日 HH:mm:ss')
+                }
+            },
+            computed:{
+                time(){
+                    this.timeT = Date.now();
+                    return Date.now();
+                },
+                fmtTime(){
+                    // 若不穿参，则会将当前时间的时间戳进行格式化
+                    return dayjs(this.timeT).format('YYYY年MM月DD日 HH:mm:ss')
+                }
+            },
+            // 局部过滤器，即只能在一个vue实例中使用
+            // filters:{
+            //     // 过滤器的本质是函数，fmt参数写默认值，防止遇到没有传参的
+            //     timeFormater(value,fmt='YYYY-MM-DD HH:mm:ss'){
+            //         return dayjs(value).format(fmt)
+            //     },
+            //     mySlice(value){
+            //         return value.slice(0,4);//只取年份
+            //     }
+            // }
+        })
+    </script>
+</body>
+</html>

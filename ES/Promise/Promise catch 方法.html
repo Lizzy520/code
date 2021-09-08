@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise catch 方法</title>
+</head>
+<body>
+    <script>
+        const p = new Promise((resolve,reject) => {
+            setTimeout(() => {
+                // 设置 p 的状态为失败，并设置失败的值
+                reject("出错啦！！");
+            },1000)
+        });
+
+        // 1. 使用then方法指定成功或失败回调
+        // p.then((value) => {
+        //     console.log(value);
+        // },(reason) => {
+        //     console.warn(reason);
+        // });
+
+        // 2. 使用catch方法，相当于then方法中只指定失败函数
+        p.catch(function(reason){
+            console.warn(reason);
+        })
+    </script>
+</body>
+</html>

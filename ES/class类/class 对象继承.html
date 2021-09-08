@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>class 对象继承</title>
+</head>
+<body>
+    <script>
+        // ES5 使用构造函数实现继承
+        function Phone(brand,price){
+            this.brand = brand;
+            this.price = price;
+        };
+
+        Phone.prototype.change = function(){
+            console.log("我可以改变世界");
+        }
+
+        // 继承
+        function SmartPhone(brand,price,color,size){
+            // 调用父级构造函数里面的初始化代码
+            // Phone 通过 call 方法改变他的 this 值
+            // this 指向 SmartPhone 中的 this，即SmartPhone的一个实例对象
+            Phone.call(this,brand,price);
+            this.color = color;
+            this.size = size;
+        };
+
+        // 设置子级构造函数的原型
+        // 这样SmartPhone的实例对象就会有父级的方法
+        SmartPhone.prototype = new Phone;
+        // 然后做一个校正，不做也可以
+        SmartPhone.prototype.constructor = SmartPhone;
+
+        // 声明子级的方法
+        SmartPhone.prototype.photo = function(){
+            console.log("我可以拍照");
+        }
+
+        SmartPhone.prototype.playGame = function(){
+            console.log("我可以玩儿游戏");
+        }
+
+        const myPhone = new SmartPhone("xiaomi",3800,"black","5.5 inch");
+        console.log(myPhone);
+
+        // 类的继承
+        class Phone2{
+            // 构造函数
+            constructor(brand,price){
+                this.brand = brand;
+                this.price = price;
+            }
+
+            // 父类的成员属性
+            change(){
+                console.log("我可以改变世界");
+            }
+        };
+
+        // 子类 使用 extends 关键字
+        class SmartPhone2 extends Phone2{
+            // 构造方法
+            constructor(brand,price,color,size){
+                // 调用父类的构造方法进行初始化
+                super(brand,price); //Phone2.call(this,brand,price)
+                this.color = color;
+                this.size = size;
+            }
+            // 成员属性
+            photo(){
+                console.log("我可以拍照");
+            }
+
+            playGame(){
+                console.log("我可以玩儿游戏");
+            }
+            
+            // 子类对父类方法的重写
+            change(newVal){
+                console.log("我可以视频通话，我可以改变世界");
+                this.price = newVal;
+            }
+        }
+
+        const oppo = new SmartPhone2("oppo",3000,"blue","5.5 inch");
+        console.log(oppo);
+        oppo.change(5000); //可以继承父类的方法
+        oppo.photo();
+        oppo.playGame();
+        console.log(oppo.price);
+
+    </script>
+</body>
+</html>

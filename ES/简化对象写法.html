@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简化对象写法</title>
+</head>
+<body>
+  <script type="text/javascript">
+        let name = "Jack";
+        let change = function(){
+            console.log("我可以改变你！");
+        }
+
+        const obj = {
+            name,   //相当于 name:name
+            change, //相当于 change:change
+            fun(){  //函数简写，相当于 fun:function(){}
+                console.log("object方法简写");  
+            }
+        }
+
+        console.log(obj);
+  </script>
+</body>
+</html>

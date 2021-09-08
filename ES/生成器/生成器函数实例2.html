@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成器函数实例2</title>
+</head>
+<body>
+    <script>
+        // 异步任务 解决回调地狱
+        function getUsers(){
+            setTimeout(() => {
+                let data = "用户数据";
+                it.next(data);
+            },1000)
+        }
+        function getOrders(){
+            setTimeout(() => {
+                let data = "订单数据";
+                it.next(data);
+            },1000)
+        }
+        function getGoods(){
+            setTimeout(() => {
+                let data = "商品数据";
+                it.next(data);
+            },1000)
+        }
+
+        function * gen(){
+            let users = yield getUsers();
+            console.log(users);
+            let orders = yield getOrders();
+            console.log(orders);
+            let goods = yield getGoods();
+            console.log(goods);
+        }
+
+        let it = gen();
+        it.next();
+    </script>
+</body>
+</html>

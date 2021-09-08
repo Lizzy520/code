@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成器函数参数</title>
+</head>
+<body>
+    <script>
+        function * fun(arg){
+            console.log("arg:",arg);
+            let first = yield 1;
+            console.log(first);
+            let second = yield 2;
+            console.log(second);
+            let third = yield 3;
+            console.log(third);
+            let forth = yield 4;
+            console.log(forth);
+        }   
+
+        // 获取迭代器对象
+        let it = fun("AAA");
+        console.log(it.next());
+        console.log(it.next(222));
+        console.log(it.next(333));
+        console.log(it.next(444));
+        console.log(it.next(555));
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>el与data的两种写法</title>
+    <script src="../../vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id = "root">
+        <h1>hello, {{name}}</h1>
+    </div>
+
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+        const v = new Vue({
+            // el:'#root',
+
+            // data 的第一种写法 对象式
+
+            // data:{
+            //     name:"xiaoliqi"
+            // }
+
+            // data 的第二种写法 函数式 使用组件必须使用函数式
+            // data:function(){
+            //     //必须返回一个对象，对象中的数据即我们想要的data数据
+            //     return{
+            //         name:'xiaoliqi'
+            //     }
+            // }
+            // 简写函数
+            data(){
+                //必须返回一个对象，对象中的数据即我们想要的data数据
+                return{
+                    name:'xiaoliqi'
+                }
+            }
+
+        })
+        // el 的第二种写法：
+        v.$mount('#root');
+        // setTimeout(() => {
+        //     v.$mount('#root');
+        // }, 1000);
+    </script>
+</body>
+</html>

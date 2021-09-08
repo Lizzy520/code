@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件的基本使用</title>
+    <script src="../../../vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>欢迎来到{{name}}学习！</h1>
+        <button v-on:click="showInfo">点击（不传参）</button>
+        <!-- 为event保留占位符 -->
+        <button v-on:click="showInfo2('hello',$event)">点击（传参）</button>
+    </div>
+
+    <script>
+        new Vue({
+            el:"#root",
+            data:{
+                name:"水乐"
+            },
+
+            methods:{
+                // 所有被Vue管理的方法，都用普通函数，不要用箭头函数，否则this就不指向Vue实例了，而是window
+                // methods中的方法不做数据代理
+                showInfo(){
+                    alert("记得起床说早安，睡前说晚安！")
+                    console.log("@",this); //this为vm
+                    console.log(event.target); //整个元素
+                    console.log(event.target.innerText); //标签体
+                },
+
+                showInfo2(h,event){
+                    alert(h,"world!");
+                    console.log(event);
+
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

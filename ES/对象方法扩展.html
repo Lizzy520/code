@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对象方法扩展</title>
+</head>
+<body>
+    <script>
+        // 判断两个值是否完全相等 类似于 ===
+        console.log(Object.is(120,120));
+        // 区别 判断NaN时
+        console.log(Object.is(NaN,NaN));//true
+        console.log(NaN === NaN);//false，NaN 和任何类型的值作等于比较，都是false
+
+        // 对象合并
+        const class1 = {
+            name: "Lizzy",
+            age: 18,
+            number: "20180000",
+            sex: "female"
+        }
+        const class2 = {
+            name: "Just",
+            age: 18,
+            number: "20180001",
+            gender: "male"
+        }
+        // 两个参数：被覆盖对象，覆盖对象，前者中后者也有的会被后者覆盖，没有则合并
+        console.log(Object.assign(class1,class2));
+
+        // 设置原型对象
+        const school = {
+            name: "CQU"
+        }
+        const campus = {
+            xiaoqu: ["A区","B区","C区","虎溪校区"],
+            name: "校区"
+        }
+        // 为school对象设置原型
+        Object.setPrototypeOf(school,campus);//不建议这么做
+        // 可以在Object.create的时候就把原型设置好
+        console.log(school);
+
+        // 获取原型对象
+        console.log(Object.getPrototypeOf(school));
+    </script>
+</body>
+</html>

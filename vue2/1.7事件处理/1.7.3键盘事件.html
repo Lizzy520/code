@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>键盘事件</title>
+    <script src="../../../vue.js"></script>
+    <style>
+     
+    </style>
+</head>
+<body>
+    <div id="root">
+        <h1>欢迎来到{{name}}学习</h1>
+        <input type="text" placeholder="按下回车提示输入" @keyup.enter="showInfo" />
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        new Vue({
+            el:"#root",
+            data:{
+                name:"神乐"
+            },
+
+            methods:{
+                showInfo(e){
+                    // e.keyCode 为键盘上每个字符的编码，回车键是13
+                    // console.log(e.keyCode);
+                    // e.key 为按键的名字
+                    // console.log(e.key)，可以使用@keyup.Enter="xxx"，Enter为回车键的名字，与Vue提供的不同
+                    // 注意，如果按键的名字是两个单词组成，如切换大小写 CapsLock，则需要写成 caps-lock
+                    
+                    // if(e.keyCode !== 13) return;
+                    // // 如果是回车键，则打印输入框中的内容，即input的value
+                    // console.log(e.target.value);
+
+                    // 可以不用像上面这么写，Vue给常用的键盘都做了相应别名
+                    // 如回车键为：@keyup.enter="xxx" （有keyup keydown 等事件）
+                    console.log(e.target.value);
+
+                    // 自定义键名，然后我们就可以通过@keyup.huiche="xxx"来触发了
+                    Vue.config.keyCodes.huiche = 13;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

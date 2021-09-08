@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set集合实践</title>
+</head>
+<body>
+    <script>
+        let arr = [1,2,3,4,5,4,3,2,1];
+        
+
+        // 数组去重
+        // 使用set，并通过扩展运算符转为逗号分隔的参数序列，并放到数组中（否则结果为set）
+        const noRepeat = [...new Set(arr)];
+        console.log(noRepeat);
+
+        // 求交集
+        let arr2 = [1,2,3,6,7,8,9,2,3];
+        let a1 = new Set(arr);
+        let a2 = new Set(arr2);
+        let res = [];
+        for(const v of a2){
+            if(a1.has(v)){
+                res.push(v);
+            }
+        }
+        console.log(res);
+
+        // 老师写法
+        let result = [...new Set(arr)].filter(item => new Set(arr2).has(item));
+        console.log(result);
+
+        // 求并集
+        let arr3 = arr.concat(arr2);
+        // let res2 = new Set(arr3);
+        console.log(arr3);
+
+        // 老师写法
+        let union = [...arr,...arr2];
+        console.log(union);
+
+        // 求差集
+        let diff = [...new Set(arr)].filter(item => !(new Set(arr2).has(item)));
+        console.log(diff);
+
+    </script>
+</body>
+</html>

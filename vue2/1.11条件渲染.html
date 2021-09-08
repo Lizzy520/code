@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条件渲染</title>
+    <script src="../../vue.js" type="text/javascript"></script>
+    <style>
+        .bg1{
+            background-color: burlywood;
+            height: 100px;
+        }
+        .bg2{
+            background-color: cadetblue;
+            height: 100px;
+        }
+        .bg3{
+            background-color: darkkhaki;
+            height: 100px;
+        }
+        .bg4{
+            background-color: darksalmon;
+            height: 100px;
+        }
+        .bg5{
+            background-color: cornflowerblue;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!-- 1. 使用 v-show 做条件渲染 如果变换频率高可以使用 -->
+        <!-- v-show 只是调整底层的display，为false时就隐藏，即display:none，但是该节点还在 -->
+        <div style="background-color: aquamarine;">
+            <h1 v-show="show">欢迎来到{{name}}学习</h1>
+        </div>
+        <!-- 也可以写成表达式 -->
+        <!-- <h1 v-show="1 === 1">欢迎来到{{name}}学习</h1> -->
+        <!-- <h1 v-show="false">欢迎来到{{name}}学习</h1> -->
+
+        <!-- 2. 使用 v-if 做条件渲染 变换频率低可以使用 -->
+        <!-- 当为false时，会将整个节点删除 -->
+        <div style="background-color: aqua;">
+            <h1 v-if="show">欢迎来到{{name}}学习</h1>
+            <!-- <h1 v-if="1 === 1">欢迎来到{{name}}学习</h1> -->
+            <!-- <h1 v-if="false">欢迎来到{{name}}学习</h1> -->
+        </div>
+
+        <!-- 要求：点击一次展示一个div -->
+        <div>
+            <h1>当前的n值是：{{n}}</h1>
+            <button @click="changeBg">n++</button>
+            <br/><br/>
+
+            <div :class="bg" v-show="n % 5 === 0">{{n}}</div>
+            <div :class="bg" v-show="n % 5 === 1">{{n}}</div>
+            <div :class="bg" v-show="n % 5 === 2">{{n}}</div>
+            <div :class="bg" v-show="n % 5 === 3">{{n}}</div>
+            <div :class="bg" v-show="n % 5 === 4">{{n}}</div>
+
+            <!-- v-if v-else-if v-else 注意三者中间不能有其他元素打断，否则后面的东西不会再进行判断 -->
+            <!-- <div :class="bg" v-if="n % 5 === 0">{{n}}</div>
+            <div :class="bg" v-else-if="n % 5 === 1">{{n}}</div>
+            <div :class="bg" v-else-if="n % 5 === 2">{{n}}</div>
+            <div :class="bg" v-else-if="n % 5 === 3">{{n}}</div>
+            <div :class="bg" v-else>{{n}}</div> -->
+        </div>
+
+        <!-- 模板 template 只能与 v-if 配合使用，不能与 v-show ，里面的全部样式相同，但不改变结构 -->
+        <template v-if="n === 1">
+            <h2>你好，世界</h2>
+            <h2>你好，Vue</h2>
+        </template>
+    </div>
+
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el:"#root",
+            data:{
+                name:"神乐",
+                show:true,
+                bg:"bg1",
+                n:0
+            },
+            methods:{
+                changeBg(){
+                    this.n++;
+                    const arr = ['bg1','bg2','bg3','bg4','bg5'];
+                    let index = this.n
+                    if(index % 5 === 0){
+                        this.bg = arr[0];
+                    }
+                    else if(index % 5 === 1){
+                        this.bg = arr[1];
+                    }
+                    else if(index % 5 === 2){
+                        this.bg = arr[2];
+                    }
+                    else if(index % 5 === 3){
+                        this.bg = arr[3];
+                    }
+                    else{
+                        this.bg = arr[4];
+                    }
+                }
+            }
+            
+        })
+    </script>
+</body>
+</html>

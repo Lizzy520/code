@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姓名案例 watch实现</title>
+    <script src="../../../vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="root">
+        姓：<input type="text" v-model="firstname" /><br/><br/>
+        名：<input type="text" v-model="lastname" /><br/><br/>
+        姓名：<span>{{fullname}}</span>
+        <!-- 注意，这里是计算属性，不是methods方法，不能加() -->
+    </div>
+
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el:"#root",
+            // data中的数据一发生改变，Vue就会重新解析模板，才能知道模板中何处使用了该数据，才能进行更新
+            data:{
+                firstname:"张",
+                lastname:"三",
+                fullname:"张-三"
+            },
+            watch:{
+                // 不需要深度监视也不需要immediate 简写
+                // 相比computed，变得复杂了，需要同时监听firstname和lastname，而且还要先准备好fullname，并且要有初始值
+                // 但是监视属性可以开启异步任务，比如让firstname修改1秒后再显示全名，但计算属性不可以，无法使用setTimeout，因为他需要return返回值，但我们无法让其稍等再有返回值
+                // 此时不要奇怪用了箭头函数，this却还是vue实例，因为定时器所指定的回调是不受Vue控制的，是由浏览器定时器管理模块控制的，是js引擎调的，
+                // 在箭头函数中，没有自己的this，他就会往外找，就找到了普通函数firstname，由Vue管理，因此其this是vm
+                // 这里定时器若写成普通函数，则this指向window
+                firstname(newValue){
+                   setTimeout(() => {
+                    this.fullname = newValue + "-" + this.latname
+                   }, 1000);
+                },
+                lastname(newValue){
+                    this.fullname = this.firstname + "-" + newValue
+                }
+            }
+        })
+        
+    </script>
+</body>
+</html>

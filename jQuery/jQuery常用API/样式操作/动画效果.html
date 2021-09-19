@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画效果</title>
+    <script src="../../jquery.min.js"></script>
+    <style>
+        div{
+            margin-bottom:100px;
+        }
+        .div1 button,.div2 button,.div5 button{
+            margin-left:30px;
+            margin-right:20px;
+            margin-bottom:20px;
+            margin-top:50px;
+        }
+        .div3 button{
+            margin-left:14px;
+            margin-right:10px;
+            margin-bottom:20px;
+            margin-top:50px;
+        }
+        .div1 div,.div2 div,.div3 div,.div4 div{
+            width:300px;
+            height:300px;
+            background-color: pink;
+        }
+        .div5 div{
+            position:absolute;
+            width:300px;
+            height:300px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <!-- jQuery 封装的常见动画效果
+        1. 显示隐藏
+        show()  hide()  toggle()(显示和隐藏切换)
+            show([speed],[easing],[fn]) 
+            hide([speed],[easing],[fn])
+            toggle([speed],[easing],[fn])
+            参数都是可选的，一般情况下不加参数
+                speed：三种预定速度之一（"slow"，"normal"，"fast"），或者表示动画时常的毫秒数值（如：1000）
+                easing：用来指定切换效果（匀速、加速、减速），默认是"swing"，可用参数"linear"
+                fn：回调函数，在动画完成时执行的函数，每个元素执行一次
+            
+            hide([speed],[easing],[fn])
+
+
+        2. 滑动
+        上拉：slideDown() 下拉：slideUp()   上/下拉切换：slideToggle()
+        参数同上
+        
+        3. 淡入淡出 
+        fadeIn()    fadeOut()   fadeToggle()    fadeTo()
+        前三个参数同上
+
+        fadeTo([[speed],opacity,[easing],[fn]])
+        opacity：透明度必须写，取值0-1之间
+
+        4. 自定义动画
+        animate(params,[speed],[easing],[fn])
+        params：想要更改的样式属性，以对象形式传递，必须写，属性名可以不用带引号，
+                如果时复合属性则采用驼峰式命名法borderLeft，其余参数都可以省略
+
+
+        5. 事件切换
+        hover([over],out)
+        加了[]表示可选参数
+        如果只写一个函数，那么鼠标经过和离开都会触发这个函数
+        over：鼠标移到元素上要触发的函数（相当于mouseenter）
+        out：鼠标移出元素时要触发的函数（相当于mouseleave）
+
+        6. 动画队列及其停止排队方法
+            6.1 动画或效果队列
+                动画或效果一旦触发就会执行，如果多次触发，就造成多个动画或者效果排队执行
+                （如上面的事件切换，如果我们瞬间的多次触发）
+            6.2 停止动画
+                stop()  用于停止动画或效果
+                这样，不管触发多少次，只会执行你最新触发的那一次
+                注意：stop()写到动画或效果的前面，相当于停止结束上一次的动画
+     -->
+     <div class="div1">
+        <button>显示</button>
+        <button>隐藏</button>
+        <button>切换</button>
+        <div></div>
+     </div>
+     <div class="div2">
+        <button>上拉</button>
+        <button>下拉</button>
+        <button>切换</button>
+        <div></div>
+     </div>
+     <div class="div3">
+        <button>淡入</button>
+        <button>淡出</button>
+        <button>切换</button>
+        <button>透明度</button>
+        <div></div>
+     </div>
+     <div class="div4">
+        事件切换 + 停止动画：鼠标移入移出
+        <div></div>
+     </div>
+     <div class="div5">
+        <button>animate</button>
+        <div></div>
+     </div>
+     <script>
+         $(function(){
+             $(".div1 button").click(function(){
+                 let index = $(this).index();
+                 console.log(index);
+                 console.log(typeof index);
+                 switch(index){
+                    case 0:
+                        $(".div1 div").show("slow",function(){
+                            $(this).css("background","cyan");
+                        });
+                        break;
+                    case 1:
+                        $(".div1 div").hide("slow",function(){
+                            alert("see u later");
+                        });
+                        break;
+                    case 2:
+                        $(".div1 div").toggle(1000);
+                        break;
+                    default:
+                        $(".div1 div").hide();
+                        break;
+                 }
+             })
+             $(".div2 button").click(function(){
+                 let index = $(this).index();
+                 console.log(index);
+                 console.log(typeof index);
+                 switch(index){
+                    case 0:
+                        $(".div2 div").slideUp("slow",function(){
+                            $(this).css("background","cyan");
+                        });
+                        break;
+                    case 1:
+                        $(".div2 div").slideDown("slow",function(){
+                            alert("see u later");
+                        });
+                        break;
+                    case 2:
+                        $(".div2 div").slideToggle(1000);
+                        break;
+                    default:
+                        $(".div2 div").hide();
+                        break;
+                 }
+             })
+             $(".div3 button").click(function(){
+                 let index = $(this).index();
+                 console.log(index);
+                 console.log(typeof index);
+                 switch(index){
+                    case 0:
+                        $(".div3 div").fadeIn(1000,function(){
+                            $(this).css("background","cyan");
+                        });
+                        break;
+                    case 1:
+                        $(".div3 div").fadeOut("slow",function(){
+                            alert("see u later");
+                        });
+                        break;
+                    case 2:
+                        $(".div3 div").fadeToggle(1000);
+                        break;
+                    case 3:
+                        $(".div3 div").fadeTo(1000,0.5);
+                        break;
+                    default:
+                        $(".div3 div").fadeIn();
+                        break;
+                 }
+             })
+            //  鼠标经过
+            // mouseenter mouseleave
+             $(".div4 div").hover(function(){
+                $(this).stop().slideUp();
+             },function(){
+                //  stop()必须写在动画前面
+                $(this).stop().slideDown();
+                // 注意：这里不能使用hide()，因为隐藏之后，结点就没有了
+             })
+
+            //  自定义动画 animate
+            $(".div5 button").click(function(){
+                console.log(this);
+                $(".div5 div").animate({
+                    width:400,
+                    height:400,
+                    opacity:0.7,
+                    left:500,
+                    top:1500
+                },1000);
+            })
+         })
+     </script>
+</body>
+</html>

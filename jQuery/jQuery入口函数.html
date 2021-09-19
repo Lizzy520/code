@@ -1,0 +1,42 @@
+<!--
+ * @Author: chenlu
+ * @email: 815760121@qq.com
+ * @Date: 2021-08-27 21:00:39
+ * @Description:  
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 入口文件</title>
+    <script src="./jquery.min.js"></script>
+    <style>
+        div{
+            width:200px;
+            height:200px;
+            background:pink;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+    <!-- 
+        jQuery 的顶级对象 $
+        $ 是 jQuery 的别称，在代码中可以使用 jQuery 代替 $
+        $ 是 jQuery 的顶级对象，相当于原生 js 中的 window，把元素利用$包装成jQuery对象，就可以调用jQuery的方法
+     -->
+    <script>
+        //写法1
+        // $(document).ready(function(){
+        //     $('div').hide()
+        // }) 
+
+        // 写法2 常用
+        $(function(){
+            $('div').hide();
+        })
+    </script>
+</body>
+</html>

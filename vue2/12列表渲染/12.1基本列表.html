@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基本列表</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- v-for 遍历时最好写上 :key 值可以使用索引值index，也可以用遍历对象的唯一标识，冒号表示动态绑定 -->
+        <!-- 遍历数组 -->
+        <h2>遍历数组</h2>
+        <ul>
+            <!-- <li v-for="item in persons" :key="item.id"> -->
+            <!-- 也可以用 for...of -->
+            <li v-for="(item,index) in persons" :key="index">
+                {{item.id}} {{item.name}} {{item.age}}
+            </li>
+        </ul>
+        <!-- 遍历对象 -->
+        <h2>遍历对象</h2>
+        <ul>
+            <li v-for="(value,key) of cars" :key="key">
+                {{key}}--{{value}}
+            </li>
+        </ul>
+        <!-- 遍历字符串 不常用 -->
+        <h2>遍历字符串</h2>
+        <ul>
+            <li v-for="(s,i) of str" :key="i">
+                {{s}}--{{i}}
+            </li>
+        </ul>
+        <!-- 遍历指定次数，值是正整数 不常用 -->
+        <h2>遍历指定次数</h2>
+        <ul>
+            <li v-for="(number,index) of 5" :key="index">
+                {{number}}--{{index}}
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+        new Vue({
+            el:"#root",
+            data:{
+                persons:[
+                    {id:"001",name:"张三",age:18},
+                    {id:"002",name:"李四",age:19},
+                    {id:"003",name:"王五",age:20}
+                ],
+                cars:{
+                    name: "奥迪A8",
+                    price:"70万",
+                    color:"黑色"
+                },
+                str: "hello"
+            }
+        })
+    </script>
+</body>
+</html>

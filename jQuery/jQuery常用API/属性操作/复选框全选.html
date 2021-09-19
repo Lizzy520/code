@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复选框全选</title>
+    <script src="../../jquery.min.js"></script>
+</head>
+<body>
+    <input class="j-checkbox" type="checkbox"/>1<br/><br/>
+    <input class="j-checkbox" type="checkbox"/>2<br/><br/>
+    <input class="j-checkbox" type="checkbox"/>3<br/><br/>
+    <input class="j-checkbox" type="checkbox"/>4<br/><br/>
+    <input class="j-checkbox" type="checkbox"/>5<br/><br/>
+    <input class="checkAll" type="checkbox"/>全选
+
+    <script>
+        $(function(){
+            //查找被选中的表单元素 :checked选择器
+            let len = $(".j-checkbox").length;//伪数组
+            $(".j-checkbox").change(function(){
+                // 被选中元素的个数
+                let checkLen = $(".j-checkbox:checked").length;
+                console.log(checkLen);
+                if(checkLen === len){
+                    $(".checkAll").prop("checked",true);
+                }
+                else{
+                    $(".checkAll").prop("checked",false);
+                }
+            })
+            $(".checkAll").change(function(){
+                // let check = $(this).prop("checked");
+                // console.log(check);
+                // if(check === true){
+                //     $(this).siblings("input").prop("checked",true);
+                // }
+                // else{
+                //     $(this).siblings("input").prop("checked",false);
+                // }
+
+                //结合老师写法
+                $(this).siblings("input").prop("checked",$(this).prop("checked"));
+                
+            })
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!--
+ * @Author: chenlu
+ * @email: 815760121@qq.com
+ * @Date: 2021-08-28 20:27:24
+ * @Description:  
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>操作css样式</title>
+    <script src="../../jquery.min.js"></script>
+    <style>
+        .div1{
+            background-color: aqua;
+            width: 300px;
+            height:300px;
+        }
+        .div2{
+            color:white;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+      修改css样式方法：  
+        jQuery可以使用css方法来修改简单元素样式，也可以操作类，修改多个样式
+        1. 参数只写属性名，不写属性值，则返回属性值
+        $(this).css("color");
+
+        2. 参数是 属性名，属性值，逗号分隔，是设置一组央视，属性必须加引号，值如果是数字可以不用跟单位和引号
+        $("div").css("width","200px");
+        $("div").css("width",200);
+
+        3. 参数可以是以对象形式，方便设置多组样式，属性名和属性值用冒号隔开，属性可以不用加引号，值不是数字则要加引号
+        $("div").css({"width":"200px","color":"red"});
+        $("div").css({
+            width:200,
+            color:"red",
+            //复合属性必须采用驼峰命名法
+            backgroundColor:"blue"
+        });
+
+      设置类样式方法：
+        作用等同于以前的classList，可以操作类样式，注意操作类里面的参数不要加点号
+        1. 添加类
+        $("div").addClass("current");
+
+        2. 删除类
+        $("div").removeClass("current");
+
+        3.切换类 没有该类名则添加，有则移除，可以先在css写好这个类，再用jQuery切换效果，实现动态切换
+        $("div").toggleClass("current");
+     -->
+     <div class="div1">
+         <div class="div2">我爱你</div>
+     </div>
+     <script>
+         $(function(){
+             $(".div1").click(function(){
+                 $(this).addClass("current");
+                 $(".current").css("background","pink");  
+                 $(".div2").removeClass("div2"); 
+             })
+             
+         })
+     </script>
+</body>
+</html>

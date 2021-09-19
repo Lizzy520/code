@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多库共存</title>
+    <script src="../jquery.min.js"></script>
+</head>
+<body>
+    <!-- 
+        问题概述：
+            jQuery使用$作为标识符，随着jQuery的流行，其它
+            js库也会用这$作为标识符，这样一起使用会引起冲突。
+        客观需求：
+            需要一个解决方案，让jQuery和其它的js库不存在冲突，可以同时存在，这就叫做多库共存
+
+        jQuery解决方案：
+        1. 把里面的$符号统一改为jQuery
+        2. jQuery变量规定新的名称，让jQuery释放对$控制权，让用户自己决定：$noConflict()    var xx = $.noConflict{}
+     -->
+     <div></div>
+     <span></span>
+    <script>
+        $(function(){
+            // 定义一个有冲突的函数名
+            function $(ele){
+                return document.querySelector(ele);
+            }
+            console.log($("div"));
+            // $.each();//报错
+            // 1. jQuery代替$
+            jQuery.each();
+            // 2. 自定义名称
+            var a = jQuery.noConflict();
+            console.log(a("span"));
+            a.each()
+        })
+    </script>
+</body>
+</html>

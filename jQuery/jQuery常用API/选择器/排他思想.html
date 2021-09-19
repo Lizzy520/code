@@ -1,0 +1,58 @@
+<!--
+ * @Author: chenlu
+ * @email: 815760121@qq.com
+ * @Date: 2021-08-28 20:26:27
+ * @Description:  
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>排他思想</title>
+    <script src="../../jquery.min.js"></script>
+    <style>
+        button{
+            margin-right:10px;
+        }
+        div{
+            margin:100px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button>点击</button>
+        <button>点击</button>
+        <button>点击</button>
+        <button>点击</button>
+        <button>点击</button>
+        <button>点击</button>
+        <button>点击</button>
+    </div>
+    <script>
+        $(function(){
+            // 点击按钮改变背景颜色，其余按钮颜色不变
+            // 1. 隐式迭代 给所有的按钮都绑定了点击事件
+            $("button").click(function(){
+                // 2. 当前元改变背景颜色
+                $(this).css("backgroundColor","pink");
+                // 3. 其余兄弟去掉背景颜色
+                $(this).siblings("button").css("background","");
+
+                // 链式编程：节省代码量，看起来更优雅  但要注意执行的对象
+                // $(this).css("background","pink").sblings().css("background","")
+
+                // 得到当前元素索引号
+                console.log($(this).index());
+
+                // 可以通过eq($(this).index())来匹配响应要显示的内容
+                // （如button的index最好与索要显示的内容的index相同，即要求出现顺序相同）
+                // 通过show()、hide()与siblings()的使用来展示相应内容
+                // 也可以把所有的内容隐藏起来，只显示当前的内容
+            })
+        })
+    </script>
+</body>
+</html>

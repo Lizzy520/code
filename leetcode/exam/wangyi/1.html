@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文字环绕图片 + 0.5px线</title>
+    <style>
+        .hr {
+            width: 300px;
+            background-color: #000;
+        }
+        .hr.half-px {
+            height: 0.5px;
+        }
+        .hr.one-px {
+           height: 1px;
+        }
+        .hr.scale-half {
+            height: 1px;
+            transform: scaleY(0.5);
+        }
+    </style>
+</head>
+<body>
+</style>
+<body>
+    <p>1px + scaleY(0.5)</p>
+    <div class="hr scale-half"></div>
+    <!-- 下面这种很多浏览器会将0.5px四舍五入为1px -->
+    <p>0.5px</p>
+    <div class="hr half-px"></div>
+    <p>1px</p>
+    <div class="hr one-px"></div>
+    <p style="width:400px;">
+        <!-- HTML里面的hspace 和 vspace 属性：用于设置图片与周围文本的上下距离；
+             hspace：用于设置图片与文本左右的距离，html5已经取消，建议用css
+             align 图片位置
+        -->
+        <img src="./1.jpg" align="right" width="120" hspace="5" vspace="5">
+        HTML文字环绕图片布局HTML文字环绕图片布局HTML文字环绕图片布局HTML文字环绕图片布局HTML文字环绕图片布局HTML文字环绕图片布局HTML文字环绕图片布局HTML文字环绕图片布局HTML文字环绕图片布局HTML文字环绕图片布局HTML文字环绕图片布局HTML文字环绕图片布局HTML文字环绕图片布局HTML文字环绕图片布局HTML文字环绕图片布局
+    </p>
+    <!-- <div>
+        <p>0.5px</p>
+        <div class="half"></div>
+        <p>1px</p>
+        <div class="one"></div>
+    </div> -->
+</body>
+</html>

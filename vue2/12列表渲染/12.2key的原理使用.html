@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>key的原理</title>
+    <script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+    <!-- 
+        v-for 遍历时最好写上 :key 值可以使用索引值index，也可以用遍历对象的唯一标识，冒号表示动态绑定 
+        使用index存在一个效率低的问题，在一些特殊场景也会出问题，例如当给数组最前面添加一个元素，
+        则后面的index会相应的发生改变，但index没变，会将后面的信息按照原来的index显示出来。
+        具体看视频30
+    -->
+    <!--
+        react、vue 中 key 有什么作用（key 的内部原理）
+        1. 虚拟DOM中key的作用：
+            key时虚拟DOM对象的标识，当数据发生变化时，Vue会根据【新数据】生成【新的虚拟DOM】，
+            随后Vue进行【新虚拟DOM】的差异比较，比较规则如下：
+        
+            2. 比较规则：
+            （1）旧虚拟DOM中找到了与新虚拟DOM相同的key：
+                a. 若虚拟DOM中内容没变，直接使用之前的真实DOM
+                b. 若虚拟DOM中内容变了，则生成新的真实DOM，随后替换掉页面中之前的真实DOM
+
+            （2）旧虚拟DOM中没有找到与新虚拟DOM相同的key：
+                创建新的真实DOM，随后渲染到页面。
+
+        3. 用index作为key可能会引发的问题：
+            （1）若对数据进行 逆序添加、逆序删除等操作：
+                会产生没有必要的真实DOM更新 => 界面效果没问题，但效率低
+
+            （2）若结构中还包含输入类的DOM：
+                会产生错误DOM更新 => 界面有问题
+
+        4. 开发中如何选key：
+            （1）最好使用每条数据的唯一标识作为key，比如id、手机号、身份证号、学号等唯一值
+            （2）如果不存在对数据的逆序增添等破坏顺序操作，仅用于渲染列表的展示，使用index作为key没有问题
+      -->
+    <div id="root">
+        <button @click.once="add">添加人员</button><br>
+        <ul>
+            <!-- 在这种情况下使用index作为key会出问题
+                 要是没有写key，Vue会自动将index作为key
+            -->
+            <li v-for="(item,index) of persons" :key="index">
+                {{item.name}}--{{item.age}}
+                <input type="text" />
+            </li>
+        </ul>
+        <ul>
+            <!-- 在这种情况下使用遍历对象的唯一标识作为key不会出问题
+                 而且原来的数据会复用，不会重新生成，效率更高
+            -->
+            <li v-for="(item,index) of persons" :key="item.id">
+                {{item.name}}--{{item.age}}
+                <input type="text" />
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+        new Vue({
+            el: "#root",
+            data:{
+                persons:[
+                    {id:"001",name:"张三",age:18},
+                    {id:"002",name:"李四",age:19},
+                    {id:"003",name:"王五",age:20}
+                ]
+            },
+            methods:{
+                add(){
+                    const x = {id:"004",name:"陈六",age:"21"};
+                    this.persons.unshift(x);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

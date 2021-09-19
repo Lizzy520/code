@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>位置操作</title>
+    <script src="../../jquery.min.js"></script>
+    <style>
+        * {
+            margin-top: 10px;
+            padding: 0;
+        }
+
+        body {
+            height: 2200px;
+        }
+
+        .father {
+            width: 400px;
+            height: 200px;
+            background-color: pink;
+            /* margin:20px; */
+            margin-left: 20px;
+            margin-top: 50px;
+            overflow: hidden;
+            position: relative;
+            /*若没有这句，则父级没有定位，子结点使用position()方法得到的是相对于文档的偏移*/
+        }
+
+        .son {
+            width: 150px;
+            height: 150px;
+            background-color: rgb(243, 135, 243);
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .back {
+            width: 40px;
+            height: 40px;
+            background-color: lightgray;
+            position: fixed;
+            left: 450px;
+            top: 650px;
+            text-align: center;
+            /* 初始时不可间，后面由js控制 */
+            display: none;
+        }
+
+        .mydiv {
+            width: 400px;
+            height: 200px;
+            margin-left: 20px;
+        }
+
+        .box {
+            position: fixed;
+            left: 435px;
+            top: 250px;
+            display: none;
+        }
+
+        .mypos {
+            margin: auto;
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border-style: solid;
+            border-top-style: hidden;
+            border-color: rgb(0, 0, 0);
+        }
+
+        /* 做一个current，匹配到的项addClass，没有匹配到的removeClass */
+        .current {
+            background-color: orangered;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- offset()   position()  scrollTop()/scrollLeft()
+        1. offset()设置或获取元素偏移   相对于文档
+            offset()方法设置或返回被选元素相对于文档的偏移坐标，跟父级没有关系
+            获取：element.offset()（返回top和left距离文档的距离）
+            
+            该方法有两个属性值，left和top
+                element.offset().top
+                element.offset().left
+            
+            设置元素的偏移：element.offset({
+                top:200,
+                left:200
+            })
+
+        2. position()获取元素偏移（不能设置）
+        position()方法用于返回被选元素相对于带有定位的父级偏移坐标，如果父级都没有定位，则以文档为准。
+
+        3. scrollTop()/scrollLeft()设置或获取元素被卷去的头部/左部
+        返回顶部： $(document).scrollTop(0)页面返回顶部，但是没有动画
+        
+        带有动画的返回顶部：animate()动画函数中有一个scrollTop属性可以设置位置
+        但注意animate是元素做动画，因此我们把它包装成dom元素
+        $("body,html").animate({scrollTop:0});
+        
+
+     -->
+    <div class="father">
+        <div class="son"></div>
+    </div>
+    <div class="back">返回顶部</div>
+
+    <div class="mydiv" style="background-color: aqua;"></div>
+    <div class="mydiv" style="background-color: rgb(233, 116, 73);"></div>
+    <div class="mydiv" style="background-color: rgb(130, 205, 255);"></div>
+    <div class="mydiv" style="background-color: rgb(255, 240, 157);"></div>
+    <div class="mydiv" style="background-color: rgb(250, 166, 236);"></div>
+    <div class="mydiv" style="background-color: rgb(166, 153, 245);"></div>
+
+    <div class="box">
+        <div class="mypos" style="color: rgb(126, 240, 240);border-top-style: solid;">0</div>
+        <div class="mypos" style="color: rgb(253, 142, 101);">1</div>
+        <div class="mypos" style="color: rgb(130, 205, 255);">2</div>
+        <div class="mypos" style="color: rgb(255, 240, 157);">3</div>
+        <div class="mypos" style="color: rgb(250, 166, 236);">4</div>
+        <div class="mypos" style="color: rgb(166, 153, 245);">5</div>
+    </div>
+
+
+
+    <script>
+        $(function () {
+            console.log($(".son").offset());
+            console.log($(".son").offset().top);
+            //  $(".son").offset({
+            //      top:200,
+            //      left:200
+            //  })
+            console.log($(".son").position());
+
+            let boxTop = $(".father").offset().top;
+            toggleTool();//每次刷新页面都调用这个函数，放置进来时超过了该位置，但back不显示
+            // function toggleTool(){
+            //     //  页面滚动事件
+            //     $(window).scroll(function(){
+            //         // console.log($(document).scrollTop());
+            //         if($(document).scrollTop() >= boxTop){
+            //             $(".back").fadeIn();
+            //         }
+            //         else{
+            //             $(".back").fadeOut();
+            //         }
+
+            //     })
+            // }
+            // 判断是否需要显示
+            function toggleTool() {
+                // console.log($(document).scrollTop());
+                if ($(document).scrollTop() >= boxTop) {
+                    $(".back").stop().fadeIn();
+                }
+                else {
+                    $(".back").stop().fadeOut();
+                }
+            }
+            //  页面滚动事件
+            $(window).scroll(function () {
+                toggleTool();
+            })
+
+            $(".back").click(function () {
+                // $(document).scrollTop(0);
+                // animate是针对DOM元素，因此不能使用document，我们可以包装body和html
+                $("body,html").stop().animate({
+                    scrollTop: 0
+                    // 可以求出我们要去到的元素位置的offset().top
+                });//不能写$(document)，因为animate是针对元素，应该是html和body元素做动画
+
+            })
+            $(document).ready(function () {
+                $(".back").mouseover(function () {
+                    $(this).css("cursor", "Pointer");
+                })
+            })
+            // $(".back").mouseover(function(){
+            //     $(this).css("cursor","Pointer");
+            // })
+
+            // $(document).ready()和传统的方法<body οnlοad=”load()”> 相似，
+            // 不同的是onload()的方法是在页面加载完成后才发生，这包括DOM元素和其
+            // 他页面元素（例如图片）的加载。而$(document).ready()所要执行的代
+            // 码是在DOM元素被加载完成的情况下执行，所以，使用document.ready()
+            // 方法的执行速度比onload()的方法要快。
+
+            // 遍历每一个.mydiv，当页面滑动到某个div的顶部时，得到它们的索引号，
+            // 通过索引号找到对应的侧边栏，并修改其背景色，记得去掉其他的current
+            // 页面滚动事件
+            // 这里由bug，就是当我们点击侧边栏的时候，背景色会轮着改变直到停在我们需要的地方
+            // 因此我们需要设置节流阀，即互斥锁 flag
+            $(window).scroll(function () {
+                $(".mydiv").each(function (i, e) {
+                    // console.log(i);
+                    // 它取得的距离是浮点数，最好向上取整
+                    // 向下取整:Math.floor()    四舍五入：Math.round()
+                    if (Math.ceil($(document).scrollTop()) >= $(e).offset().top) {
+                        // console.log(i);
+                        $(".mypos").eq(i).addClass("current").siblings(".mypos").removeClass("current");
+                    }
+                })
+            })
+
+            // 侧边栏，当页面滚动到蓝色div时显示(box顶部)
+            let firstTop = $(".mydiv").eq(0).offset().top;
+            console.log(firstTop, "firstTop");
+            justify();
+            function justify() {
+                if ($(document).scrollTop() >= firstTop) {
+                    $(".box").stop().fadeIn();
+                }
+                else {
+                    $(".box").stop().fadeOut();
+                }
+            }
+            $(window).scroll(function () {
+                justify();
+            })
+
+            // 点击侧边栏，页面跳到对应项的顶部
+            $(".mypos").click(function () {
+                console.log($(this).index(), "click index");
+                let index = $(this).index();
+                console.log(index, "this index");
+                let pos = $(".mydiv").eq(index).offset().top;
+                $("body,html").stop().animate({
+                    scrollTop: pos
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>

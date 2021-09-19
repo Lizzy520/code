@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表过滤</title>
+    <script src="../vue.js" tyep="text/javascript"></script>
+</head>
+<body>
+    <!-- 注：字符串都包含空字符串，且索引号也是0 arr.indexOf('') -->
+    <div id="root">
+        <h2>模糊搜索</h2>
+        <input type="text" placeholder="请输入你要搜索的名字" v-model="keyword" name="" id="" />
+        <ul>
+            <li v-for="item of searchRes" :key="item.id">
+                {{item.name}}--{{item.age}}--{{item.gender}}
+            </li> 
+        </ul>
+    </div>
+    <script tyep="text/javascript">
+        Vue.config.productionTip = false;
+        new Vue({
+            el: "#root",
+            data:{
+                keyword:"",
+                persons: [
+                {id:"001",name:"马冬梅",age:19,gender:"female"},
+                {id:"002",name:"周冬雨",age:20,gender:"female"},
+                {id:"003",name:"周杰伦",age:21,gender:"male"},
+                {id:"004",name:"温兆伦",age:22,gender:"male"}
+                ],
+                // searchRes: []   //watch时需要
+            },
+            // 使用computed实现
+            computed:{
+                searchRes(){
+                    return this.persons.filter((p) => {
+                        return p.name.indexOf(this.keyword) !== -1
+                    })
+                }
+            }
+
+            // 使用watch实现
+            // watch:{
+            //     keyword:{
+            //         handler(val){
+            //             immediate:true;//若写成普通函数，没有该属性，则初始时界面没有列表
+            //             this.searchRes = this.persons.filter((item) => {
+            //                 return item.name.indexOf(val) !== -1
+            //             })
+            //         }
+            //     }
+            // }
+        })
+    </script>
+</body>
+</html>

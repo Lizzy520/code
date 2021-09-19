@@ -1,0 +1,93 @@
+<!--
+ * @Author: chenlu
+ * @email: 815760121@qq.com
+ * @Date: 2021-08-31 10:58:03
+ * @Description:  
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微博发布案例</title>
+    <script src="../../jquery.min.js"></script>
+    <style>
+        .box{
+            width:300px;
+            position:absolute;
+            top:50px;
+            left:150px;
+            border: #3a3a3a solid;
+            padding:20px;
+            text-align:center;
+        }
+
+        ul{
+            width:300px;
+            padding-left:10px;
+        }
+
+        ul li{
+            line-height: 25px;
+            width: auto;
+            border-bottom:1px dashed #cccccc;
+            display: none;
+        }
+
+        input{
+            float: right;
+        }
+
+        ul li a{
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <!-- 要求：
+        点击发布按钮，动态创建一个li，放入文本框的内容和删除按钮，并且添加到ul中
+        点击的删除按钮，可以删除当前的微博留言
+    -->
+    <div class="box" id="weibo">
+        <span>微博发布</span>
+        <textarea name="" class="text" cols="30" rows="10"></textarea>
+        <br><br>
+        <button class="btn">发布</button>
+        <ul>
+        </ul>
+    </div>
+
+    <script>
+        $(function(){
+            $(".btn").on("click",function(){
+                let li = $("<li></li>");
+                // javascript: 是一个伪协议
+                // javascript:是表示在触发<a>默认动作时，执行一段JavaScript代码，而 javascript:; 表示什么都不执行，这样点击<a>时就没有任何反应。
+                // href="javascript:;"就是去掉a标签的默认行为，跟href="javascript:void(0)"是一样的
+                // void 是JavaScript 的一个运算符，void(0)就是什么都不做的意思。
+
+                li.html($(".text").val() + "<a href='javascript:;'>删除</a>");
+                $("ul").prepend(li);
+                // 以滑动方式显示隐藏的元素
+                // 如果元素已经是完全可见，则该效果不产生任何变化，除非规定了 callback 函数。
+                // 注释：该效果适用于通过 jQuery 隐藏的元素，或在 CSS 中声明 display:none 的元素
+                // （但不适用于 visibility:hidden 的元素）。
+                li.slideDown();
+                // 将输入框置空
+                $(".text").val("");
+
+                // 删除评论 使用on()给动态创建的元素绑定事件
+                $("ul").on("click","a",function(){
+                    // $(this).parent().slideUp().remove();
+                    $(this).parent().slideUp(function(){
+                        $(this).remove();
+                    })
+                })
+                
+
+            })
+        })
+    </script>
+</body>
+</html>

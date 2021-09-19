@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>筛选选择器</title>
+    <script src="../../jquery.min.js"></script>
+</head>
+<body>
+    <!-- 
+        :first      $("li:first")   获取第一个li元素
+        :last       $("li:last")    获取最后一个li元素
+        :eq(index)  $("li:eq(2)")   获取到的li元素中，选择索引号为2的元素，索引号index从0开始
+        :odd        $("li:odd")     获取到的li元素中，选择索引号为奇数的元素
+        :even       $("li:even")    获取到的li元素中，选择索引号为偶数的元素
+     -->
+     <ul>
+        <li>哦</li>
+        <li>哦</li>
+        <li>哦</li>
+        <li>哦</li>
+    </ul>
+    <ol>
+        <li>嗯</li>
+        <li>嗯</li>
+        <li>嗯</li>
+        <li>嗯</li>
+    </ol>
+    <script>
+        $(function(){
+            // 颜色可以叠加
+            $("ul li:first").css("color","red");
+            $("ul li:last").css("color","pink");
+            $("ul li:odd").css("color","blue");
+            $("ol li:even").css("color","green");
+            $("ol li:eq(1)").css("color","red");
+
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>尺寸操作</title>
+    <script src="../../jquery.min.js"></script>
+    <style>
+        div{
+            width:200px;
+            height:200px;
+            background-color: pink;
+            padding:10px;
+            border:15px solid red;
+            margin:20px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 
+        width()/height()                    取得匹配元素宽度和高度，只算width和height，不包含padding、border、margin这些，若()中有值，则是修改
+        innerWidth()/innerHeight()          取得匹配匀速宽度和高度值，包含padding
+        outerWidth()/outerHeight()          取得匹配元素宽度和高度值，包含padding、border
+        outerWidth(true)/outerHeight(true)  取得匹配元素宽度和高度值，包含padding、border、margin    
+     -->
+    <div></div>
+    <script>
+        console.log($("div").width());
+        $("div").width(300);
+        console.log($("div").width());
+        console.log($("div").innerWidth())
+        console.log($("div").outerWidth());
+        console.log($("div").outerWidth(true));
+    </script>
+</body>
+</html>

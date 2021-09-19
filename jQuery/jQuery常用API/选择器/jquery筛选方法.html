@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>筛选方法</title>
+    <script src="../../jquery.min.js"></script>
+</head>
+<body>
+    <!-- 
+        parent()            $("li").parent()                    查找父亲（最近一级）
+        children(selector)  $("ul").children("li")              相当于$("ul>li")，最近一级（亲儿子）
+        find(selector)      $("ul").find("li")                  相当于$("ul li")，后代选择器
+        siblings(selector)  $(".first").sibings("li")           查找兄弟结点，不包括自己本身
+        nextAll([expr])     $(".first").nextAll()               查找当前元素之后所有的同辈元素
+        prevtAll([expr])    $(".first").prevtAll()              查找当前元素之前所有的同辈元素
+        hasClass(class)     $("div").hassClass("protected")     检查当前的元素是否含有某个特定的类，有则返回true
+        eq(index)           $("li").eq(2)                       相当于$("li:eq(2)")，推荐筛选器方法，因为index可以是变量
+     -->
+
+     <div class="father">
+        <div class="son">儿子</div>
+     </div>
+     <div class="nav">
+         <p>我是p1</p>
+         <div>
+             <p>我是p2</p>
+         </div>
+     </div>
+     <script>
+         $(function(){
+             let par = $(".son").parent();
+            //  console.log(par.html());
+            console.log(par.text());
+            par.css("color","blue");
+
+            // 第一个儿子 子代选择器 ul>li
+            let son1 = $(".nav").children("p");
+            son1.css("color","red");
+            console.log(son1.text());
+            // 后代选择器 ul li
+            let son2 = $(".nav").find("p");
+            son2.css("backgroundColor","pink");
+         })
+     </script>
+</body>
+</html>

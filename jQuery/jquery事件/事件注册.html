@@ -1,0 +1,93 @@
+<!--
+ * @Author: chenlu
+ * @email: 815760121@qq.com
+ * @Date: 2021-08-30 19:24:53
+ * @Description:  
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件注册</title>
+    <script src="../jquery.min.js"></script>
+    <style>
+        .current{
+            background-color: skyBlue;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        1. 单个事件注册
+        语法：element.事件(function(){})
+        $("button").click(function(){事件处理程序})
+        
+        其它事件和原生基本一致，比如：
+        mouseover、mouseenter、mouseout、blur、focus、change、keydown、keyup、resize、scroll等
+
+        2. 事件处理
+        事件处理 on() 绑定事件
+        on()方法在匹配元素上绑定一个或多个事件的事件处理函数
+        
+        语法：
+        element.on(events,[selector],fn)
+
+        events：一个或多个用空格分隔的事件类型，如"click"或"keydown"
+        selector：元素的子元素选择器
+        fn：回调函数，即绑定在元素身上的侦听函数
+
+        绑定多个事件处理程序的时候，可以使用对象的形式
+
+        优势：
+            1.  可以绑定多个事件，多个处理事件处理程序
+            
+            2.  可以事件委派操作，事件委派的定义就是，把原来加给子元素
+                身上的事件绑定在父元素身上，就是把事件委派给父元素。
+                $("ul").on('click','li',function(){
+                    alert("hello");
+                })
+                此时事件是绑定在ul身上的，只有一个ul元素添加了点击事件，
+                但是事件的触发对象是它的子元素li，然后会因为事件冒泡，
+                事件会冒泡到父元素身上，父元素身上有一个点击事件，就会
+                执行函数中的点击事件。
+
+            3.  动态创建的元素，click()没有办法绑定事件，on()可以给动态生成的元素绑定事件
+
+     -->
+     <div class="div1" style="width:200px;height:200px;background-color:pink;"></div>
+     <div class="div2" style="width:200px;height:200px;background-color:pink;margin-top:20px;"></div>
+     <ul>
+         <li>原来</li>
+         <li>原来</li>
+         <li>原来</li>
+     </ul>
+     <script>
+         $(function(){
+            $(".div1").on({
+                mouseenter:function(){
+                    $(this).css("background","lightBlue");
+                },
+                mouseout:function(){
+                    $(this).css("background","cyan");
+                },
+                click:function(){
+                    $(this).css("background","green");
+                }
+            })
+            $(".div2").on("mouseenter mouseleave",function(){
+                $(".div2").stop.fadeToggle();
+                // toggleClass()不管用，不知道为啥
+            })
+
+            // on()可以给动态生成的元素绑定事件
+            let li = $("<li>我是后来创建的li</li>");
+            $("ul").append(li);
+            $("ul").on("click","li",function(){
+                alert("hello");
+            })
+         })
+     </script>
+</body>
+</html>

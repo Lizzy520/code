@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>off()解绑事件</title>
+    <script src="../jquery.min.js"></script>
+    <style>
+        .mydiv{
+            width:200px;
+            height:200px;
+            background-color: pink;
+        }
+        .div2{
+            margin-top:20px;
+            width:200px;
+            height:200px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        off()方法可以移除通过on()方法添加的事件处理程序
+        
+        element.off()//解绑元素所有事件处理程序
+        element.off("click")//解绑元素上面的点击事件，后面的 foo 是侦听函数名
+        element.off("click","li")//解绑事件委托
+
+        one()：如果有的事件只想触发一次，可以使用one()来绑定事件
+     -->
+    <div class="mydiv">2秒后去掉点击事件</div>
+    <div class="div2">只触发一次</div>
+    <ul>
+        <li>这是原来的li</li>
+        <li>这是原来的li</li>
+        <li>这是原来的li</li>
+        <li>这是原来的li</li>
+        <li>这是原来的li</li>
+    </ul>
+    <script>
+        $(function(){
+            $(".mydiv").on({
+                click:function(){
+                    $(this).css("background","lightBlue");
+                },
+                mouseenter:function(){
+                    $(this).css("background","orange");
+                },
+                mouseleave:function(){
+                    $(this).css("background","lightGray");
+                }
+            })
+            let arr = [];
+            $("ul").on("click","li",function(){
+                if(arr[$(this).index()] === true){
+                    // 事件委托中的绑定解除 这里只解除当前点击的这个li
+                    let liTemp = $(this);
+                    $("ul").off("click","liTemp");
+                    arr[$(this).index()] = false;
+
+                    $(this).css("background","");
+                }
+                else{
+                    console.log($(this).index())
+                    $(this).css("background","pink");
+                    arr[$(this).index()] = true;
+                }
+            })
+            setTimeout(()=>{
+                // 若不写拿个事件，则会将所有事件解除
+                $(".mydiv").off("click");
+            },2000)
+
+            // one() 绑定事件，但只能触发事件一次
+            $(".div2").one("click",function(){
+                $(this).css("background","cyan");
+            })
+  
+        })
+    </script>
+</body>
+</html>

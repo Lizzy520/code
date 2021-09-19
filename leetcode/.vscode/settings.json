@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "*.vsd": "go",
+        "*.doc": "plaintext",
+        "*.vue": "vue",
+        "iostream": "cpp",
+        "unordered_map": "cpp",
+        "ratio": "cpp",
+        "xutility": "cpp",
+        "xstring": "cpp",
+        "vector": "cpp",
+        "ostream": "cpp",
+        "cmath": "cpp"
+    }
+}

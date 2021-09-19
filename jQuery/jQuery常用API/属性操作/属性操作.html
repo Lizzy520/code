@@ -1,0 +1,66 @@
+<!--
+ * @Author: chenlu
+ * @email: 815760121@qq.com
+ * @Date: 2021-08-29 14:52:36
+ * @Description:  
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>属性操作</title>
+    <script src='../../jquery.min.js'></script>
+    <style>
+        div{
+            width:200px;
+            height:200px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        1. 获取元素固有属性值 prop()
+        element.prop("属性")
+
+        2. 设置元素固有属性值
+        element.prop("属性"."属性值")
+
+        3. 获取元素的自定义属性 attr()
+        element.attr("属性");//类似于原生 getAttribute()
+        该方法也可以获取H5自定义属性
+
+        4.设置元素的自定义属性
+        element.attr("属性","属性值");//类似于原生 setAttribute()
+
+     -->
+     <!-- title：鼠标停在链接上时显示的文本 -->
+    <a href='http://baidu.com' title="从百度变成了哔哩哔哩">百度</a>
+    <input type="checkbox" name="" id="" checked>
+    <div index="1" data-index="5"></div>
+    <script>
+        $(function(){
+            // 获取和设置元素固有属性值
+            console.log($("a").prop("href"));
+            setTimeout(()=>{
+                $("a").prop("href","https://www.bilibili.com");
+                let res = $("a").text("哔哩哔哩");
+                console.log(res);
+            },3000)
+            // change函数，当元素发生改变时执行
+            $("input").change(function(){
+                console.log($(this).prop("checked"));
+            })
+
+            // 获取自定义属性值
+            console.log($("div").attr("index"));
+            console.log($("div").attr("data-index"));
+            $("div").attr("index","4");
+            console.log($("div").attr("index"));
+        })
+    </script>
+</body>
+
+</html>
